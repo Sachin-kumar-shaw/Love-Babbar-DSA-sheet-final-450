@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Reverse {
+public class Question1 {
     // Method 1
     // By using extra array
     // t.c = O(n);
