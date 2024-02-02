@@ -5,50 +5,49 @@ public class Question5 {
     // we can solve this problem using an extra array
 
     // ----------------------------------------------------
-    // by using temporary array
-    // t.c = O(n) && s.c = O(n)
+    // by using Dutch national flag algorithm of two colours
+    // t.c = O(n) && s.c = O(1)
+    public void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
 
     public void segregateElements(int arr[], int n) {
         // Your code goes here
-        int temp[] = new int[n];
+        // divide the array into three parts left side for negative elements
+        // middle part for unknown elements and right side for positive elements
+
         int i = 0;
-        int j = 0;
-        for (; j < n; j++) {
-            if (arr[j] >= 0) {
-                temp[i++] = arr[j];
+        int j = n - 1;
+        while (i < j) {
+            if (arr[i] < 0) {
+                i++;
+            } else {
+                swap(arr, i, j);
+                j--;
             }
-        }
-        for (j = 0; j < n; j++) {
-            if (arr[j] < 0) {
-                temp[i++] = arr[j];
-            }
-        }
-        for (i = 0; i < n; i++) {
-            arr[i] = temp[i];
         }
     }
 
     // -------------------------------------------------
-    // by using two stack one for negative and one for positive elements
-    // t.c = O(n) && s.c = O(n)
+    // by using two pointers
+    // t.c = O(n) && s.c = O(1)
 
     public void segregateElements_2(int arr[], int n) {
         // Your code goes here
-        Stack<Integer> neg = new Stack<>();
-        Stack<Integer> pos = new Stack<>();
-        for (int i = 0; i < n; i++) {
-            if (arr[i] < 0) {
-                neg.push(arr[i]);
-            } else {
-                pos.push(arr[i]);
+        int i = 0;
+        int j = n - 1;
+        while (i < j) {
+            while (i < n && arr[i] < 0) {
+                i++;
             }
-        }
-        int i = n - 1;
-        while (!neg.isEmpty()) {
-            arr[i--] = neg.pop();
-        }
-        while (!pos.isEmpty()) {
-            arr[i--] = pos.pop();
+            while (j >= 0 && arr[j] >= 0) {
+                j--;
+            }
+            if (i < j) {
+                swap(arr, i, j);
+            }
         }
     }
 }
